@@ -1,0 +1,70 @@
+﻿@page "/customer"
+@using CustomerMVC.Controllers
+@using CustomerMVC.Model
+
+@inject CustomerController CustomerController
+
+<h3>Customer Management</h3>
+
+@if (!string.IsNullOrEmpty(CustomerController.Message))
+{
+    <div class="alert alert-success" role="alert">
+        @CustomerController.Message
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in CustomerController.Customers)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.Email</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => EditCustomer(customer)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteCustomer(customer)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-success" @onclick="AddNewCustomer">Add New Customer</button>
+
+@code {
+    Customer editedCustomer = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CustomerController.LoadCustomers();
+    }
+
+    protected async Task AddNewCustomer()
+    {
+        var newCustomer = new Customer();
+        CustomerController.Message = ""; // Clear previous message
+        await CustomerController.AddCustomer(newCustomer);
+    }
+
+    protected void EditCustomer(Customer customer)
+    {
+        editedCustomer = customer;
+        // You can implement edit functionality here if needed
+    }
+
+    protected async Task DeleteCustomer(Customer customer)
+    {
+        CustomerController.Message = ""; // Clear previous message
+        await CustomerController.DeleteCustomer(customer);
+    }
+}

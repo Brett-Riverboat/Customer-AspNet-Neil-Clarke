@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerMVC.DB\CustomerMVC.DB.csproj" />
+    <ProjectReference Include="..\CustomerMVC.Model.Validation\CustomerMVC.Model.Validation.csproj" />
+    <ProjectReference Include="..\CustomerMVC.Model\CustomerMVC.Model.csproj" />
+  </ItemGroup>
+
+</Project>
